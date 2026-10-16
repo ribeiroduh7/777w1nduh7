@@ -1,0 +1,17 @@
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const path = require('path');
+const connectDB = require('./database/db');
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
+
+connectDB();
+
+app.use('/', require('./routes/auth'));
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`[API] Rodando na porta ${PORT}`));
